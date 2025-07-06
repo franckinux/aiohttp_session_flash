@@ -2,7 +2,6 @@
 Session flash messages for aiohttp.web
 """
 
-import asyncio
 from functools import partial
 
 from aiohttp_session import get_session
@@ -21,8 +20,7 @@ def pop_flash(request):
 
 
 async def middleware(app, handler):
-	@asyncio.coroutine
-	def process(request):
+	async def process(request):
 		session = yield from get_session(request)
 		flash_incoming = session.get(SESSION_KEY, [])
 		request[REQUEST_KEY] = flash_incoming[:]  # copy flash for modification
