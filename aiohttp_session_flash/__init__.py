@@ -20,8 +20,7 @@ def pop_flash(request):
 	return flash
 
 
-@asyncio.coroutine
-def middleware(app, handler):
+async def middleware(app, handler):
 	@asyncio.coroutine
 	def process(request):
 		session = yield from get_session(request)
@@ -41,8 +40,7 @@ def middleware(app, handler):
 	return process
 
 
-@asyncio.coroutine
-def context_processor(request):
+async def context_processor(request):
 	return {
 		'get_flashed_messages': partial(pop_flash, request),
 	}
