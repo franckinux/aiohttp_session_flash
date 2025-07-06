@@ -21,11 +21,11 @@ def pop_flash(request):
 
 async def middleware(app, handler):
 	async def process(request):
-		session = yield from get_session(request)
+		session = await get_session(request)
 		flash_incoming = session.get(SESSION_KEY, [])
 		request[REQUEST_KEY] = flash_incoming[:]  # copy flash for modification
 		try:
-			response = yield from handler(request)
+			response = await handler(request)
 		finally:
 			flash_outgoing = request[REQUEST_KEY]
 			if flash_outgoing != flash_incoming:
